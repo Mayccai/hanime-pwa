@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -14,78 +14,27 @@
             justify-content: center;
             align-items: center;
             background-color: #f0f0f0;
-            font-family: Arial, sans-serif;
         }
-        #content {
-            text-align: center;
-        }
-        #redirectButton {
-            padding: 10px 20px;
-            font-size: 1em;
-            cursor: pointer;
-            background-color: #4CAF50;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            display: none;
-        }
-        #loadingIndicator {
-            display: none;
-            font-size: 1.2em;
-            margin-top: 20px;
-        }
-        #statusMessage {
-            margin-bottom: 20px;
+        h1 {
+            font-size: 1.5em;
+            color: #333;
         }
     </style>
 </head>
 <body>
-    <div id="content">
-        <div id="statusMessage">正在加载...</div>
-        <button id="redirectButton">打开应用</button>
-        <div id="loadingIndicator">加载中...</div>
-    </div>
+    <h1>Redirecting...</h1>
     
     <script>
-        let deferredPrompt;
-
         if ('serviceWorker' in navigator) {
-            navigator.serviceWorker.register('sw.js')
+            navigator.serviceWorker.register('/sw.js')
                 .then(reg => console.log("Service Worker registered", reg))
                 .catch(err => console.log("Service Worker registration failed", err));
         }
 
-        function isInStandaloneMode() {
-            return (window.matchMedia('(display-mode: standalone)').matches) || (window.navigator.standalone);
-        }
-
-        function redirectToApp() {
-            document.getElementById('redirectButton').style.display = 'none';
-            document.getElementById('loadingIndicator').style.display = 'block';
-            window.location.href = "https://hanime1.me";
-        }
-
-        window.addEventListener('load', () => {
-            const statusMessage = document.getElementById('statusMessage');
-            const redirectButton = document.getElementById('redirectButton');
-
-            if (isInStandaloneMode()) {
-                statusMessage.textContent = 'PWA模式已启动';
-                setTimeout(() => {
-                    statusMessage.textContent = '准备跳转到应用...';
-                    redirectToApp();
-                }, 2000);
-            } else {
-                statusMessage.textContent = '点击下方按钮打开应用';
-                redirectButton.style.display = 'block';
-                redirectButton.addEventListener('click', redirectToApp);
-            }
-        });
-
-        window.addEventListener('beforeinstallprompt', (e) => {
-            e.preventDefault();
-            deferredPrompt = e;
-        });
+        // Automatically redirect after a short delay
+        setTimeout(() => {
+            window.location.replace("https://hanime1.me");
+        }, 1000); // Adjust the delay as needed
     </script>
 </body>
 </html>
