@@ -16,6 +16,9 @@
             background-color: #f0f0f0;
             font-family: Arial, sans-serif;
         }
+        #content {
+            text-align: center;
+        }
         #redirectButton {
             padding: 10px 20px;
             font-size: 1em;
@@ -24,21 +27,28 @@
             color: white;
             border: none;
             border-radius: 5px;
+            display: none;
         }
         #loadingIndicator {
             display: none;
             font-size: 1.2em;
             margin-top: 20px;
         }
+        #statusMessage {
+            margin-bottom: 20px;
+        }
     </style>
 </head>
 <body>
-    <div>
+    <div id="content">
+        <div id="statusMessage">正在加载...</div>
         <button id="redirectButton">打开应用</button>
         <div id="loadingIndicator">加载中...</div>
     </div>
     
     <script>
+        let deferredPrompt;
+
         if ('serviceWorker' in navigator) {
             navigator.serviceWorker.register('sw.js')
                 .then(reg => console.log("Service Worker registered", reg))
@@ -55,12 +65,27 @@
             window.location.href = "https://hanime1.me";
         }
 
-        if (isInStandaloneMode()) {
-            redirectToApp();
-        } else {
-            document.getElementById('redirectButton').style.display = 'block';
-            document.getElementById('redirectButton').addEventListener('click', redirectToApp);
-        }
+        window.addEventListener('load', () => {
+            const statusMessage = document.getElementById('statusMessage');
+            const redirectButton = document.getElementById('redirectButton');
+
+            if (isInStandaloneMode()) {
+                statusMessage.textContent = 'PWA模式已启动';
+                setTimeout(() => {
+                    statusMessage.textContent = '准备跳转到应用...';
+                    redirectToApp();
+                }, 2000);
+            } else {
+                statusMessage.textContent = '点击下方按钮打开应用';
+                redirectButton.style.display = 'block';
+                redirectButton.addEventListener('click', redirectToApp);
+            }
+        });
+
+        window.addEventListener('beforeinstallprompt', (e) => {
+            e.preventDefault();
+            deferredPrompt = e;
+        });
     </script>
 </body>
 </html>
