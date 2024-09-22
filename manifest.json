@@ -1,7 +1,7 @@
 {
     "name": "Hanime PWA",
     "short_name": "Hanime",
-    "start_url": "https://hanime1.me",
+    "start_url": "/index.html",
     "display": "standalone",
     "background_color": "#ffffff",
     "theme_color": "#000000",
