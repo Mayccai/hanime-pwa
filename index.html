@@ -14,20 +14,33 @@
             justify-content: center;
             align-items: center;
             background-color: #f0f0f0;
+            font-family: Arial, sans-serif;
         }
         #redirectButton {
             padding: 10px 20px;
             font-size: 1em;
             cursor: pointer;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+        }
+        #loadingIndicator {
+            display: none;
+            font-size: 1.2em;
+            margin-top: 20px;
         }
     </style>
 </head>
 <body>
-    <button id="redirectButton">打开应用</button>
+    <div>
+        <button id="redirectButton">打开应用</button>
+        <div id="loadingIndicator">加载中...</div>
+    </div>
     
     <script>
         if ('serviceWorker' in navigator) {
-            navigator.serviceWorker.register('/sw.js')
+            navigator.serviceWorker.register('sw.js')
                 .then(reg => console.log("Service Worker registered", reg))
                 .catch(err => console.log("Service Worker registration failed", err));
         }
@@ -36,15 +49,17 @@
             return (window.matchMedia('(display-mode: standalone)').matches) || (window.navigator.standalone);
         }
 
+        function redirectToApp() {
+            document.getElementById('redirectButton').style.display = 'none';
+            document.getElementById('loadingIndicator').style.display = 'block';
+            window.location.href = "https://hanime1.me";
+        }
+
         if (isInStandaloneMode()) {
-            // 在 PWA 模式下，自动跳转
-            window.location.replace("https://hanime1.me");
+            redirectToApp();
         } else {
-            // 在浏览器模式下，显示按钮
             document.getElementById('redirectButton').style.display = 'block';
-            document.getElementById('redirectButton').addEventListener('click', () => {
-                window.location.replace("https://hanime1.me");
-            });
+            document.getElementById('redirectButton').addEventListener('click', redirectToApp);
         }
     </script>
 </body>
