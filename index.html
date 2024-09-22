@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="manifest" href="manifest.json">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; font-src 'self' https://mayccai.github.io;">
     <title>Hanime PWA</title>
     <style>
         body, html {
@@ -14,7 +15,7 @@
             justify-content: center;
             align-items: center;
             background-color: #f0f0f0;
-            cursor: pointer; /* Change cursor to indicate clickable area */
+            cursor: pointer;
         }
         h1 {
             font-size: 1.5em;
@@ -27,12 +28,11 @@
     
     <script>
         if ('serviceWorker' in navigator) {
-            navigator.serviceWorker.register('/sw.js')
+            navigator.serviceWorker.register('./sw.js')
                 .then(reg => console.log("Service Worker registered", reg))
                 .catch(err => console.log("Service Worker registration failed", err));
         }
 
-        // Redirect only after a click
         document.body.addEventListener('click', () => {
             window.location.replace("https://hanime1.me");
         });
