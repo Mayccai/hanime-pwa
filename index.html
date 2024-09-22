@@ -15,15 +15,16 @@
             align-items: center;
             background-color: #f0f0f0;
         }
-        button {
+        #redirectButton {
             padding: 10px 20px;
             font-size: 1em;
             cursor: pointer;
+            display: none;
         }
     </style>
 </head>
 <body>
-    <button id="openApp">打开应用</button>
+    <button id="redirectButton">打开应用</button>
     
     <script>
         if ('serviceWorker' in navigator) {
@@ -32,9 +33,20 @@
                 .catch(err => console.log("Service Worker registration failed", err));
         }
 
-        document.getElementById('openApp').addEventListener('click', () => {
+        function isInStandaloneMode() {
+            return (window.matchMedia('(display-mode: standalone)').matches) || (window.navigator.standalone);
+        }
+
+        if (isInStandaloneMode()) {
+            // 在 PWA 模式下，自动跳转
             window.location.replace("https://hanime1.me");
-        });
+        } else {
+            // 在浏览器模式下，显示按钮
+            document.getElementById('redirectButton').style.display = 'block';
+            document.getElementById('redirectButton').addEventListener('click', () => {
+                window.location.replace("https://hanime1.me");
+            });
+        }
     </script>
 </body>
 </html>
