@@ -1,41 +1,33 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="manifest" href="manifest.json">
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; font-src 'self' https://mayccai.github.io;">
-    <title>Hanime PWA</title>
-    <style>
-        body, html {
-            margin: 0;
-            padding: 0;
-            height: 100%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            background-color: #f0f0f0;
-            cursor: pointer;
-        }
-        h1 {
-            font-size: 1.5em;
-            color: #333;
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>hanime1.me PWA</title>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="manifest" href="manifest.json">
+  <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', function() {
+        navigator.serviceWorker.register('/service-worker.js');
+      });
+    }
+
+    document.addEventListener('DOMContentLoaded', function() {
+      // 检测是否是在独立应用环境中
+      const isStandalone = window.matchMedia('(display-mode: standalone)').matches;
+      if (!isStandalone) {
+        document.getElementById('install-prompt').style.display = 'block';
+      } else {
+        window.location.href = 'https://hanime1.me';
+      }
+    });
+  </script>
 </head>
 <body>
-    <h1>Click anywhere to continue...</h1>
-    
-    <script>
-        if ('serviceWorker' in navigator) {
-            navigator.serviceWorker.register('./sw.js')
-                .then(reg => console.log("Service Worker registered", reg))
-                .catch(err => console.log("Service Worker registration failed", err));
-        }
-
-        document.body.addEventListener('click', () => {
-            window.location.replace("https://hanime1.me");
-        });
-    </script>
+  <div id="install-prompt" style="display:none;">
+    <h1>点击安装 hanime1.me</h1>
+    <button onclick="window.location.href='https://hanime1.me';">继续到网站</button>
+  </div>
 </body>
 </html>
