@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -15,14 +15,15 @@
             align-items: center;
             background-color: #f0f0f0;
         }
-        h1 {
-            font-size: 1.5em;
-            color: #333;
+        button {
+            padding: 10px 20px;
+            font-size: 1em;
+            cursor: pointer;
         }
     </style>
 </head>
 <body>
-    <h1>Redirecting...</h1>
+    <button id="openApp">打开应用</button>
     
     <script>
         if ('serviceWorker' in navigator) {
@@ -31,10 +32,9 @@
                 .catch(err => console.log("Service Worker registration failed", err));
         }
 
-        // Automatically redirect after a short delay
-        setTimeout(() => {
+        document.getElementById('openApp').addEventListener('click', () => {
             window.location.replace("https://hanime1.me");
-        }, 1000); // Adjust the delay as needed
+        });
     </script>
 </body>
 </html>
