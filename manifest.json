@@ -1,7 +1,7 @@
 {
   "name": "hanime1.me PWA",
   "short_name": "hanime1",
-  "start_url": "/",
+  "start_url": "/hanime1-pwa/index.html",
   "display": "standalone",
   "background_color": "#ffffff",
   "description": "A simple PWA for hanime1.me",
