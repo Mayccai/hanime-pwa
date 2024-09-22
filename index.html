@@ -4,21 +4,37 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="manifest" href="manifest.json">
-    <title>Hanime1.me</title>
+    <title>Hanime PWA</title>
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #f0f0f0;
+        }
+        h1 {
+            font-size: 1.5em;
+            color: #333;
+        }
+    </style>
 </head>
 <body>
-    <h1>Hanime1.me</h1>
-    <p>点击下方按钮跳转到目标网站：</p>
-    <a href="https://hanime1.me" target="_blank">
-        <button>访问 Hanime1</button>
-    </a>
-
+    <h1>Redirecting...</h1>
+    
     <script>
         if ('serviceWorker' in navigator) {
             navigator.serviceWorker.register('/sw.js')
                 .then(reg => console.log("Service Worker registered", reg))
                 .catch(err => console.log("Service Worker registration failed", err));
         }
+
+        // Automatically redirect after a short delay
+        setTimeout(() => {
+            window.location.replace("https://hanime1.me");
+        }, 1000); // Adjust the delay as needed
     </script>
 </body>
 </html>
