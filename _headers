@@ -1,2 +1,1 @@
-/*
-Content-Security-Policy: default-src 'none'; font-src https://mayccai.github.io; script-src 'self' https://mayccai.github.io; style-src 'self' 'unsafe-inline' https://mayccai.github.io; img-src 'self' data:; connect-src 'self';
+
